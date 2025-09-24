@@ -41,7 +41,7 @@ export enum CurrencyType {
     EURO = "EURO",
     JPY = "JYY"
 }
-export enum Gender {
+export enum GenderType {
     MALE = 'MALE',
     FEMALE = 'FEMALE',
     NON_BINARY = 'NON_BINARY',
