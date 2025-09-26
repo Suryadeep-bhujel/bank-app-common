@@ -196,3 +196,10 @@ export enum AddressStatus {
     ON_HOLD = 'ON_HOLD',
     BLACK_LISTED = 'BLACK_LISTED',
 }
+
+export enum AddressType {
+    HOME = 'HOME',
+    WORK = 'WORK',
+    OTHER = 'OTHER',
+    NOT_SPECIFIED = 'NOT_SPECIFIED'
+}
