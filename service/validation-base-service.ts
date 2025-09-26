@@ -6,6 +6,7 @@ export class BaseValidationService {
     public item: object;
     public optionalMethods: any[] = []
     public dbData: object = {};
+    public fieldPrefix?: string; 
 }
 export interface DataFormat {
     field: string
