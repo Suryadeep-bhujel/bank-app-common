@@ -30,6 +30,7 @@ export class DefaultMessages extends BaseValidationService {
         isValid : `Invalid value for :field`,
         ageAfter : `Invalid age value in :field, age should be more than :params`,
         ageBefore : `Invalid age value in :field, age should be less than :params`,
+        unique : ":field value should be unique in :params",
         
     }
     getDefaultMessage(rule: string, field?: string, rowIndex?: number, params?: any[]) {

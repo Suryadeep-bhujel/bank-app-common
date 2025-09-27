@@ -1,6 +1,7 @@
 import { checkIsEmpty } from "@bank-app-common/functions/shared-functions";
 import { DefaultMessages } from "@bank-app-common/service/default-messages.service";
 import { FormRuleInterface } from "@bank-app-common/service/validation-base-service";
+import dayjs from "dayjs";
 export class FormRules extends DefaultMessages implements FormRuleInterface {
     public activeField;
     constructor() {
@@ -35,6 +36,14 @@ export class FormRules extends DefaultMessages implements FormRuleInterface {
             return this.dbData?.[tableName].findIndex(elem => elem?.[fieldName] === val) !== -1
         }
         return this.dbData?.[tableName].findIndex(elem => elem === val) !== -1
+    }
+    unique(val: string | number, ...args: any[]) {
+        const [tableName, fieldName] = args;
+        if (!(tableName in this.dbData)) return false;
+        if (!checkIsEmpty(fieldName)) {
+            return this.dbData?.[tableName].findIndex(elem => elem?.[fieldName] === val) === -1
+        }
+        return this.dbData?.[tableName].findIndex(elem => elem === val) === -1
     }
 
     price(val: number | bigint, ...args): boolean {
@@ -78,12 +87,35 @@ export class FormRules extends DefaultMessages implements FormRuleInterface {
     date_format(date: string, ...args): boolean {
         return this.validateDateFormat(date)
     }
+    is_date(date: string): boolean {
+        if (!date || typeof date !== "string") return false;
+
+        // common formats you want to accept
+        const formats = [
+            "DD-MM-YYYY",
+            "DD/MM/YYYY",
+            "DD-MM-YYYY HH:mm",
+            "DD/MM/YYYY HH:mm",
+            "YYYY-MM-DD",
+            "YYYY/MM/DD",
+            "YYYY-MM-DDTHH:mm:ssZ", // ISO with timezone
+            "MM-DD-YYYY"
+        ];
+
+        // strict check against known formats (requires customParseFormat plugin to be loaded)
+        for (const fmt of formats) {
+            if (dayjs(date, fmt, true).isValid()) return true;
+        }
+
+        // fallback: accept ISO / timestamp / native-parsable values
+        return dayjs(date).isValid();
+    }
+
 
     private validateDateFormat(dateVal: string): boolean {
         // format will be any like DD-MM-YYYY/DD-MMM-YYYY or DD/MM/YYYY or DD/MMM/YYYY
         // const dateFormatValidateRegex = /^([0-2][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
         const dateFormatValidateRegex = /^([0-2][0-9]|3[01])[-\/](0[1-9]|1[0-2])[-\/]\d{4}$/;
-        console.log("dateValdateVal", dateVal)
         if (!dateFormatValidateRegex.test(dateVal)) return false;
         const [day, month, year] = dateVal.split("-").map(Number)
         const date = new Date(year, month - 1, day);
@@ -94,7 +126,6 @@ export class FormRules extends DefaultMessages implements FormRuleInterface {
         let [date2] = args;
         date2 = this.getDate(date2);
         const [dateA, dateB] = this.parseDate(date1, date2)
-        console.log("dfskjkslfddflk", dateA, dateB)
         return dateA.getTime() < dateB.getTime();
     }
     getDate(date: string): string {
@@ -108,7 +139,6 @@ export class FormRules extends DefaultMessages implements FormRuleInterface {
         };
 
         const result = new Date();
-        console.log("resultresultresultresult", result, formatDate(result))
 
         switch (date) {
             case 'today':
