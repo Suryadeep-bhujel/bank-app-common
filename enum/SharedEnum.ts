@@ -203,3 +203,18 @@ export enum AddressType {
     OTHER = 'OTHER',
     NOT_SPECIFIED = 'NOT_SPECIFIED'
 }
+
+export enum CountryStatus {
+    ACTIVE = 'ACTIVE',
+    INACTIVE = 'INACTIVE',
+    SUSPENDED = 'SUSPENDED',
+    ON_HOLD = 'ON_HOLD',
+    BLACK_LISTED = 'BLACK_LISTED',
+}
+export enum SanctionStatus {
+    SANCTIONED = 'SANCTIONED',
+    NOT_SANCTIONED = 'NOT_SANCTIONED',
+    PENDING = 'PENDING',
+    UNDER_REVIEW = 'UNDER_REVIEW',
+    CLEARED = 'CLEARED'
+}
