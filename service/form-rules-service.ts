@@ -75,7 +75,7 @@ export class FormRules extends DefaultMessages implements FormRuleInterface {
         return false;
     }
 
-    minLength(val: string, ...args) {
+    minLength(val: string, ...args:any[]): boolean {
         if (checkIsEmpty(val)) return false;
         const [minStrLength] = args;
         if (!this.number(minStrLength)) return false;
@@ -84,7 +84,7 @@ export class FormRules extends DefaultMessages implements FormRuleInterface {
     }
     //**
     // date related validation methods */
-    date_format(date: string, ...args): boolean {
+    date_format(date: string, ...args:any[]): boolean {
         return this.validateDateFormat(date)
     }
     is_date(date: string): boolean {

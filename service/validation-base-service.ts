@@ -1,12 +1,12 @@
 export class BaseValidationService {
     public formErrors: string[][] = []
     public formErrorBags = [];
-    public dataList: object[];
-    public dataObj: object;
-    public item: object;
+    public dataList: object[] = [];
+    public dataObj: object = {};
+    public item: object = {};
     public optionalMethods: any[] = []
     public dbData: object = {};
-    public fieldPrefix?: string; 
+    public fieldPrefix?: string;
 }
 export interface DataFormat {
     field: string
@@ -20,17 +20,18 @@ export interface FormRuleInterface {
     optional: ({ }) => void;
     number: ({ }) => void;
     exists: ({ }) => void;
-    price: ({ }) => void;
-    maxNum: ({ }) => void;
-    minNum: ({ }) => void;
-    maxLength: ({ }) => void;
-    minLength: ({ }) => void;
-    nullable: ({ }) => void;
-    date_format: ({ }) => void;
-    after: ({ }) => void;
-    before: ({ }) => void;
-    afterOrEqual: ({ }) => void;
-    beforeOrEqual: ({ }) => void;
+    price: (val: number | bigint, ...args: any[]) => void;
+    maxNum: (val: number | bigint, ...args: any[]) => void;
+    minNum: (val: number | bigint, ...args: any[]) => void;
+    maxLength: (val: string, ...args: any[]) => void;
+    minLength: (val: string, ...args: any[]) => void;
+    nullable: (val: any, ...args: any[]) => void;
+    date_format: (val: string, ...args: any[]) => void;
+    after: (val: string, ...args: any[]) => void;
+    before: (val: string, ...args: any[]) => void;
+    afterOrEqual: (val: string, ...args: any[]) => void;
+    beforeOrEqual: (val: string, ...args: any[]) => void;
+
 }
 export interface ErrorBagInterface {
     field: string

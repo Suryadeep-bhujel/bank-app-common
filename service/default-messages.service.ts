@@ -38,10 +38,10 @@ export class DefaultMessages extends BaseValidationService {
         message += this.validatedElemType === ValidationFormDataType.ARRAY ? ' at Row No: :rowIndex' : '.';
         return message;
     }
-    generateMessage(messageTemplate, data: DataFormat) {
+    generateMessage(messageTemplate:string, data: DataFormat) {
         return messageTemplate
             .replace(/:field/g, data.field)
-            .replace(/:rowIndex/g, data.rowIndex)
+            .replace(/:rowIndex/g, data.rowIndex?.toString() || "")
             .replace(/:value/g, data.value)
             .replace(/:params/g, data.params ? data.params.join(", ") : "")
             .replace(/now/g, "current date")

@@ -16,6 +16,9 @@ export default class FormValidator<K extends number> extends FormRules {
         this.formErrors = []
         this.dbData = input.dbData;
         this.fieldPrefix = input.fieldPrefix
+        this.dataList = [];
+        this.dataObj = {};
+        this.item = {};
         if (typeof input.data === 'object') {
             this.validatedElemType = ValidationFormDataType.OBJECT
             this.dataObj = input.data;
